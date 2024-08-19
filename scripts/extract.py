@@ -12,27 +12,27 @@ yesterday_str = yesterday.strftime('%Y%m%d')
 print(yesterday_str)
 
 # Configuration
-s3_bucket_name = 'your-bucket-name'
+s3_bucket_name = 'mybucket'
 file_name = f'mall_customers_{yesterday_str}.parquet'
-local_download_path = 'intermediate_files/mall_customers_{yesterday_str}.parquet' 
+local_download_path = '/opt/airflow' 
 
-# Create local directory if it doesn't exist
-os.makedirs(local_download_path, exist_ok=True)
+# # Create local directory if it doesn't exist
+# os.makedirs(local_download_path, exist_ok=True)
 
 # Initialize S3 client
-s3_client = boto3.client('s3')
+s3_client = boto3.client(
+    service_name="s3",
+    endpoint_url="http://minio:9000",
+    aws_access_key_id="minio",
+    aws_secret_access_key="minio123",
+    region_name="ap-south-1",
+)
 
-# Alternate s3 client init
-# s3 = boto3.client(
-#     's3',
-#     aws_access_key_id=aws_access_key_id,
-#     aws_secret_access_key=aws_secret_access_key,
-#     aws_session_token=aws_session_token  # Optional
-# )
+print(s3_client.list_buckets()["Buckets"])
 
 try:
-    s3_client.download_file(s3_bucket_name, file_name, local_download_path)
-    print(f'Successfully downloaded {file_name} from bucket {s3_bucket_name} to {local_download_path}')
+    s3_client.download_file(Bucket=s3_bucket_name, Key=file_name, Filename=local_download_path+"/int.pq")
+    print(f'Successfully downloaded {file_name} from bucket {s3_bucket_name} to {local_download_path+"/int.pq"}')
     
 except NoCredentialsError:
     # Handle the case where AWS credentials are not provided

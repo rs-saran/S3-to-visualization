@@ -11,13 +11,13 @@ yesterday_str = yesterday.strftime('%Y%m%d')
 
 print(yesterday_str)
 
-local_download_path = 'intermediate_files/mall_customers_{yesterday_str}.parquet'
+local_download_path = '/opt/airflow/int.pq'
 df = pd.read_parquet(local_download_path)
-source = "mall_customers_{yesterday_str}.parquet"
+source = f"mall_customers_{yesterday_str}.parquet"
 df["source"] = source
 
 # Define your PostgreSQL connection parameters
-DATABASE_URL = "postgresql+psycopg2://pguser:pgpswd@localhost:5432/mydatabase"
+DATABASE_URL = "postgresql+psycopg2://pguser:pgpswd@warehouse-postgres:5432/mydatabase"
 
 # Create a database engine
 engine = create_engine(DATABASE_URL)
