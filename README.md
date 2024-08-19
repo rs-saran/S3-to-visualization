@@ -34,6 +34,12 @@ The project uses [Docker Compose](./docker-compose.yaml) to set up and manage ne
 
    Mount the scripts dir to airflow
 
+   ![Airflow Screenshot](./assets/images/airflow.png)
+
+
 6. **Configure Metabase**
    - Connect Metabase to the PostgreSQL database.
    - Create dashboards and visualizations as needed. 
+
+    ![Metabase Screenshot](./assets/images/metabase-viz.png)
+
