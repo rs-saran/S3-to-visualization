@@ -2,3 +2,7 @@
 pgdata/* 
 s3toviz_env/*
 intermediate_files/*
+
+airflow/*
+!airflow/dags/
+airflow/dags/__pycache__/*
